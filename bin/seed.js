@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require('fs')
-const { db, models: {Album, Artist, Song} } = require('../server/db')
-const songs = JSON.parse(fs.readFileSync('songs.json', 'utf8'))
+const { db, models: {Employee, Department} } = require('../server/db');
 
 const seed = async () => {
   await db.sync({force: true})
@@ -23,6 +22,12 @@ const seed = async () => {
     moe.save(),
     larry.save()
   ]);
+
+  db.close()
+  console.log(`
+    Seeding successful!
+    Dealer is now ready to rock!
+  `)
 }
 
 seed().catch(err => {
