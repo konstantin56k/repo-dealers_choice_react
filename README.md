@@ -1,25 +1,42 @@
 # repo-dealers_choice_react
 
-NPM install:
+1) NPM install:
 npm i webpack webpack-cli react react-dom babel-loader @babel/core @babel/preset-react --save-dev && npm i express pg sequelize
 
-packege.json scripts to add:
+2) packege.json scripts to add:
 "build": "webpack",
 "build:dev": "npm run build -- --watch --mode=development",
 "start:dev": "npm run build:dev & nodemon server --ignore dist/ --ignore src/"
 
-webpack.config.js
+3) webpack.config.js
+const path = require('path');
+
 module.exports = {
+  mode: 'development',
+  devtool: 'source-map',
+  entry: path.join(__dirname, './src/index.js'),
+  output: {
+    filename: 'main.js',
+    path: path.join(__dirname, './dist'),
+  },
   module: {
     rules: [
       {
-        test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/,
-        options: {
-          presets: ['@babel/preset-react']
-        }
-      }
-    ]
-  }
+        exclude: /(node_modules)/,
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|pdf|jpe?g|gif|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
+      },
+    ],
+  },
 };
